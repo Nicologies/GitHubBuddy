@@ -1,0 +1,22 @@
+{
+    "manifest_version":2,
+    "name": "PReviewerExt",
+    "description" : "Extension to help review GitHub pull request",
+    "version" : "1.0",
+    "permissions" : [
+        "activeTab",
+        "nativeMessaging",
+        "storage"
+    ],
+    "background": {
+        "scripts":["connection.js"],
+        "persistent": false
+    },
+    "content_scripts":[
+        {
+            "matches": ["*://github.com/*/*/pull/*/files"],
+            "js" : ["jquery-3.1.0.min.js", "myscript.js"]
+        }
+    ],
+    "options_page": "options.html"
+}
