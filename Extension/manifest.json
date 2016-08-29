@@ -14,7 +14,7 @@
     },
     "content_scripts":[
         {
-            "matches": ["*://github.com/*/*/pull/*/files"],
+            "matches": ["*://github.com/*"],
             "js" : ["jquery-3.1.0.min.js", "myscript.js"]
         }
     ],
