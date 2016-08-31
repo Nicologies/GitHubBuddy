@@ -1,7 +1,7 @@
-function onDiffToolButtonClicked(){false
+function onDiffToolButtonClicked(){    
     var filePath = $(this).closest('.file-header').attr('data-path');
     var prUrl = window.location.href;
-    chrome.storage.sync.get({
+    chrome.storage.local.get({
         githubtoken: '',
         difftoolpath: ''
         }, function(items) {

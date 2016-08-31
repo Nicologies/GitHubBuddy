@@ -2,7 +2,7 @@
 function save_options() {
   var token = document.getElementById('githubtoken').value;
   var path = document.getElementById('difftoolpath').value;
-  chrome.storage.sync.set({
+  chrome.storage.local.set({
     githubtoken: token,
     difftoolpath: path
   }, function() {
@@ -18,7 +18,7 @@ function save_options() {
 // Restores select box and checkbox state using the preferences
 // stored in chrome.storage.
 function restore_options() {  
-  chrome.storage.sync.get({
+  chrome.storage.local.get({
     githubtoken: '',
     difftoolpath: ''
   }, function(items) {
