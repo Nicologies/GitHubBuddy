@@ -5,16 +5,16 @@ function onDiffToolButtonClicked(){
         githubtoken: '',
         difftoolpath: ''
         }, function(items) {
-            var gitHubToken = items.githubtoken;            
+            var gitHubToken = items.githubtoken;
             var toolPath = items.difftoolpath;
-        
+
             chrome.extension.sendMessage(
                 {
                     token: gitHubToken,
                     file_path: filePath,
                     pull_request: prUrl,
                     difftool: toolPath
-                });
+                }, function(){if(chrome.runtime.lastError) {console.log(chrome.runtime.lastError);}});
     });
 }
 
