@@ -1,9 +1,12 @@
 {
   "name": "com.nicologies.difftool",
   "description": "View diff in external difftool",
-  "path": "PReviewerExtHost.exe",
+  "path": "GitHubBuddyHost.exe",
   "type": "stdio",
   "allowed_origins": [
-    "chrome-extension://kbljkjplncjpkhdgblobhpkjnpkfknod/"
-  ]
+    "chrome-extension://kbljkjplncjpkhdgblobhpkjnpkfknod/",
+    "chrome-extension://lbnnpglihcnokkjnmidginaihnojkfoo/",
+    "chrome-extension://gceaeccagfaofcopffpjdokmeccggikd/"
+  ],
+  "allowed_extensions": ["GitHubBuddy"]
 }

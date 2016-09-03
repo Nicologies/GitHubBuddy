@@ -8,7 +8,7 @@ using Newtonsoft.Json.Linq;
 using Octokit;
 using PReviewer.Core;
 
-namespace PReviewerExtHost
+namespace GitHubBuddyHost
 {
     internal class Program
     {
@@ -62,7 +62,7 @@ namespace PReviewerExtHost
                 repo = match.Groups["repo"].Value;
             }
 
-            var client = new GitHubClient(new ProductHeaderValue("PReviewerExt"))
+            var client = new GitHubClient(new ProductHeaderValue("GitHubBuddy"))
             {
                 Credentials = new Credentials(token)
             };

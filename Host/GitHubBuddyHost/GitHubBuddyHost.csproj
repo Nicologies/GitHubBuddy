@@ -7,8 +7,8 @@
     <ProjectGuid>{CA3FA77F-107E-4C2E-A841-A33C5D29564F}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>PReviewerExtHost</RootNamespace>
-    <AssemblyName>PReviewerExtHost</AssemblyName>
+    <RootNamespace>GitHubBuddyHost</RootNamespace>
+    <AssemblyName>GitHubBuddyHost</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
