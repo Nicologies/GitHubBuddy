@@ -8,5 +8,5 @@
     "chrome-extension://lbnnpglihcnokkjnmidginaihnojkfoo/",
     "chrome-extension://gceaeccagfaofcopffpjdokmeccggikd/"
   ],
-  "allowed_extensions": ["GitHubBuddy"]
+  "allowed_extensions": ["GitHubBuddy@nicologies.tk"]
 }

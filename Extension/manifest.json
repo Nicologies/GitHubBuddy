@@ -24,7 +24,6 @@
     },
     "applications": {
         "gecko": {
-            "id": "djphkggjnakadgladommlgijakiideim",
             "strict_min_version": "50.*",
             "update_url": "https://example.com/updates.json"
         }
