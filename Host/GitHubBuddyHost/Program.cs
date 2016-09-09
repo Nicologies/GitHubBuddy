@@ -27,7 +27,7 @@ namespace GitHubBuddyHost
                 File.WriteAllText("error.log", ex.ToString());
                 Console.Error.WriteLine(ex.ToString());
             }
-    }
+        }
 
         public static void ProcessMessage(JObject data)
         {
