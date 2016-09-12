@@ -24,6 +24,7 @@
     },
     "applications": {
         "gecko": {
+            "id": "GitHubBuddy@nicologies.tk",
             "strict_min_version": "50.*",
             "update_url": "https://example.com/updates.json"
         }
