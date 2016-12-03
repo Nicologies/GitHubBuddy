@@ -80,6 +80,7 @@ namespace GitHubBuddyHost
             var fetcher = new DiffContentFetcher(pullRequestLocator, new FileContentPersist(), client, new PatchService());
             var files = fetcher.FetchDiffContent(githubFile, pr.Head.Sha, pr.Base.Sha).Result;
             Process.Start(toolPath, $"\"{files.Item1}\" \"{files.Item2}\"");
+            Write("Result", "OK");
         }
 
         public static JObject Read()
@@ -108,7 +109,7 @@ namespace GitHubBuddyHost
             return JsonConvert.DeserializeObject<JObject>(new string(buffer));
         }
 
-        public static void Write(JToken data, JToken messageType)
+        public static void Write(JToken messageType, JToken data)
         {
             var json = new JObject {["data"] = data, ["msgType"] = messageType};
 

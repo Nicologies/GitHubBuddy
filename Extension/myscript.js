@@ -8,14 +8,17 @@ function onDiffToolButtonClicked(){
             var gitHubToken = items.githubtoken;
             var toolPath = items.difftoolpath;
             
-            chrome.runtime.sendMessage(
-                {
+            chrome.runtime.sendMessage({
+                    msgType: 'open_difftool',
                     token: gitHubToken,
                     file_path: filePath,
                     pull_request: prUrl,
                     difftool: toolPath
-                }, function(){if(chrome.runtime.lastError) {console.log(chrome.runtime.lastError);}});
-    });
+                }, 
+                function(response){
+                    console.log(response);
+                });
+        });
 }
 
 function appendDiffToolButton(){
