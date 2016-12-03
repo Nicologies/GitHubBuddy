@@ -28,9 +28,40 @@ function appendDiffToolButton(){
     $(".file-actions:not(:has(.btn-difftool))").append('<button class="btn-octicon tooltipped tooltipped-nw btn-difftool" rel="nofollow" data-skip-pjax="" aria-label="View the changes in difftool"><svg aria-hidden="true" class="octicon octicon-eye" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path d="M8.06 2C3 2 0 8 0 8s3 6 8.06 6C13 14 16 8 16 8s-3-6-7.94-6zM8 12c-2.2 0-4-1.78-4-4 0-2.2 1.8-4 4-4 2.22 0 4 1.8 4 4 0 2.22-1.78 4-4 4zm2-4c0 1.11-.89 2-2 2-1.11 0-2-.89-2-2 0-1.11.89-2 2-2 1.11 0 2 .89 2 2z"></path></svg></button>');
     $(".btn-difftool").off('click', onDiffToolButtonClicked).on('click', onDiffToolButtonClicked);
 }
-$(function(){
-    $(document).on("pjax:end", function() {
-        appendDiffToolButton();
+
+function disableMergeButtonIfMarkedAsDontMerge(){
+    if(window.location.href.toLowerCase().indexOf("pull") === -1){
+        return;
+    }
+    
+    chrome.storage.local.get({dontMergeLabel: 'Do Not Merge'}, function(items){
+        if(items.dontMergeLabel === ''){
+            return;
+        }
+        var queryForDontMergeLabel = "#partial-discussion-sidebar .sidebar-labels a.label[title='" + items.dontMergeLabel + "']";
+        if($("#partial-discussion-sidebar .sidebar-labels a.label[title='Do Not Merge']").length){
+            var buttons = $('#partial-pull-merging .merge-message .js-select-menu button');
+            $('#partial-pull-merging .merge-message .js-select-menu button').disable(true)
+                .closest(".merge-message").append("<p class='alt-merge-options text-small'>Merge is disabled as this pull request has a label of "+items.dontMergeLabel+"</p>");
+        }
     });
+}
+
+function performActions(){
     appendDiffToolButton();
+    disableMergeButtonIfMarkedAsDontMerge();
+}
+
+$(function(){
+    jQuery.fn.extend({
+        disable: function(state) {
+            return this.each(function() {
+                this.disabled = state;
+            });
+        }
+    });
+    $(document).on("pjax:end", function() {
+        performActions();
+    });
+    performActions();
 });
