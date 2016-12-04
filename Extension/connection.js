@@ -1,7 +1,7 @@
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     if(request['msgType'] == 'open_difftool'){
         chrome.runtime.sendNativeMessage(
-            'com.nicologies.difftool',
+            'githubbuddyhost',
             request,
             function(response){            
                 if(chrome.runtime.lastError){

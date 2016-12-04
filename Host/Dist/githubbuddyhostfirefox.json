@@ -1,0 +1,7 @@
+{
+  "name": "githubbuddyhost",
+  "description": "View diff in external difftool",
+  "path": "GitHubBuddyHost.exe",
+  "type": "stdio",
+  "allowed_extensions": ["GitHubBuddy@nicologies.tk"]
+}
