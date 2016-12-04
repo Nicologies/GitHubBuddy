@@ -29,6 +29,24 @@
                     <input size=80 id='dontMergeLabel' type="text" name="dontMergeLabel" placeholder="e.g. Do Not Merge">
                 </td>
             </tr>
+            <tr>
+                <td>Text To HyperLink</td>
+                <td>
+                    <textarea style="width:600px; height:200px;" id="text2link" placeholder='e.g. 
+[
+    {
+		"from": "/JIRA-(\\d*)/gim",
+		"to": "https://mycompany.atlassian.net/browser/JIRA-$1]",
+		"displayAs": "JIRA-$1"
+	},
+	{
+		"from": "/PBI-(\\d*)/gim",
+		"to": "https://TFSServer/PBI-$1",
+		"displayAs": "PBI-$1"
+	}
+]'></textarea>
+                </td>
+            </tr>
         </table>
         <div id="status"/>
         <button id="save">Save</button>

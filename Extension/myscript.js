@@ -47,9 +47,44 @@ function disableMergeButtonIfMarkedAsDontMerge(){
     });
 }
 
+function convertTextToLink(){
+    chrome.storage.local.get({text2link: ''}, function(items){
+        if(items.text2link === ''){
+            return;
+        }
+        
+        var inJson;
+        try{
+            inJson = $.parseJSON(items.text2link);
+        }catch(e){
+            console.log(e);
+            return;
+        }
+        var titleQuery = $("h1 > span.js-issue-title:not(:has(>a[data-container-id='githubbuddy_text2link'])), .js-comment-body>p:not(:has(>a[data-container-id='githubbuddy_text2link']))");
+        titleQuery.each(function(){
+            var current = $(this);
+            console.log(current);
+            var title = current.html();
+            if (title !== undefined) {
+                $.each(inJson, function() {
+                    var from = this.from;
+                    var to = this.to;
+                    var displayAs = this.displayAs;
+                    title = title.replace(
+                            new RegExp(from),
+                            '<a data-container-id="githubbuddy_text2link" href="'+ to +'" target="_blank">'+ displayAs +'</a>'
+                        );           
+                });
+                current.html(title);
+            }
+        });
+    });
+}
+
 function performActions(){
     appendDiffToolButton();
     disableMergeButtonIfMarkedAsDontMerge();
+    convertTextToLink();
 }
 
 $(function(){

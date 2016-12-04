@@ -2,7 +2,7 @@
     "manifest_version":2,
     "name": "GitHubBuddy",
     "description" : "Extension to help review GitHub pull request",
-    "version" : "1.0",
+    "version" : "1.0.0.2",
     "permissions" : [
         "activeTab",
         "nativeMessaging",

@@ -3,10 +3,12 @@ function save_options() {
   var token = document.getElementById('githubtoken').value;
   var path = document.getElementById('difftoolpath').value;
   var dontMerge = document.getElementById('dontMergeLabel').value;
+  var text2linkValue = document.getElementById('text2link').value;
   chrome.storage.local.set({
     githubtoken: token,
     difftoolpath: path,
-    dontMergeLabel: dontMerge
+    dontMergeLabel: dontMerge,
+    text2link: text2linkValue
   }, function() {
     // Update status to let user know options were saved.
     var status = document.getElementById('status');
@@ -23,11 +25,13 @@ function restore_options() {
   chrome.storage.local.get({
     githubtoken: '',
     difftoolpath: '',
-    dontMergeLabel: 'Do Not Merge'
+    dontMergeLabel: 'Do Not Merge',
+    text2link: ''
   }, function(items) {
     document.getElementById('difftoolpath').value = items.difftoolpath;
     document.getElementById('githubtoken').value = items.githubtoken;
     document.getElementById('dontMergeLabel').value = items.dontMergeLabel;
+    document.getElementById('text2link').value = items.text2link;
   });
 }
 document.addEventListener('DOMContentLoaded', restore_options);
