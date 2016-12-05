@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -19,6 +20,15 @@ namespace GitHubBuddyHost
                 JObject data;
                 if ((data = Read()) != null)
                 {
+                    var minVer = new Version(data["min_required_nativeapp_ver"].Value<string>());
+                    var assemblyVersion = Assembly.GetExecutingAssembly().GetName().Version;
+                    if (assemblyVersion < minVer)
+                    {
+                        var err = $"Incompatible Native Host, minimal version required is {minVer}";
+                        Console.Error.WriteLine(err);
+                        Write("Error", err);
+                        return;
+                    }
                     ProcessMessage(data);
                 }
             }
