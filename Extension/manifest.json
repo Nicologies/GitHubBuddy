@@ -15,7 +15,8 @@
     "content_scripts":[
         {
             "matches": ["*://github.com/*"],
-            "js" : ["jquery-3.1.0.min.js", "myscript.js"]
+            "js" : ["jquery-3.1.0.min.js", "myscript.js"],
+            "css": ["wide-github.css"]
         }
     ],
     "options_ui": {
