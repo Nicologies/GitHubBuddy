@@ -5,16 +5,23 @@
     </head>
     <body>
         <table width='720'>
+			<tr>
+                <td/>
+                <td>
+                    <hr/><small>Click <a href='https://github.com/settings/tokens/new' target="_blank">here</a> to create a token with repo access.</small>
+                </td>
+            </tr>
             <tr>
-                <td>GitHub Token that has 'repo' Access:</td>
+                <td>GitHub Token:</td>
                 <td>
                     <input size=80 id='githubtoken' type="text" name="githubtoken">
                 </td>
             </tr>
+            
             <tr>
                 <td/>
                 <td>
-                    <small>Click <a href='https://github.com/settings/tokens/new' target="_blank">here</a> to create a personal token</small>
+                    <hr/><small>You will need to install <a target='_blank' href='https://github.com/Nicologies/GitHubBuddyHost/wiki/Installing-GitHubBuddyHost'>the native app</a></small>
                 </td>
             </tr>
             <tr>
@@ -23,28 +30,29 @@
                     <input size=80 id='difftoolpath' type="text" name="difftoolpath" placeholder="e.g. D:\tools\BeyondCompare3\BCompare.exe">
                 </td>
             </tr>
+			<tr>
+                <td/>
+                <td><hr/><small>Disable the Merge button if the pull request has this label</small></td>
+			</tr>
             <tr>
-                <td>Disable the Merge button if the pull request has the label of</td>
+                <td>Do Not Merge Label</td>
                 <td>
                     <input size=80 id='dontMergeLabel' type="text" name="dontMergeLabel" placeholder="e.g. Do Not Merge">
                 </td>
             </tr>
+			
+			<tr>
+                <td/>
+				<td>
+			        <hr/>
+				    <p>Convert JIRA-178 to Https://JIRAServer/browser/JIRA-178</p>
+                    <p>See <a target='_blank' href='https://github.com/Nicologies/GitHubBuddyHost/wiki/Text-to-Link-Configuration'>here</a> for instructions</p>
+                </td>
+            </tr>
             <tr>
-                <td>Text To HyperLink</td>
+                <td>Text To HyperLink</td>				
                 <td>
-                    <textarea style="width:600px; height:200px;" id="text2link" placeholder='e.g. 
-[
-    {
-		"from": "/JIRA-(\\d*)/gim",
-		"to": "https://mycompany.atlassian.net/browser/JIRA-$1]",
-		"displayAs": "JIRA-$1"
-	},
-	{
-		"from": "/PBI-(\\d*)/gim",
-		"to": "https://TFSServer/PBI-$1",
-		"displayAs": "PBI-$1"
-	}
-]'></textarea>
+                    <textarea style="width:600px; height:200px;" id="text2link"></textarea>
                 </td>
             </tr>
         </table>
