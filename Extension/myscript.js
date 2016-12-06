@@ -68,10 +68,9 @@ function convertTextToLink(){
             console.log(e);
             return;
         }
-        var titleQuery = $("h1 > span.js-issue-title:not(:has(>a[data-container-id='githubbuddy_text2link'])), .js-comment-body>p:not(:has(>a[data-container-id='githubbuddy_text2link']))");
+        var titleQuery = $("h1 > span.js-issue-title:not(:has(>a[data-container-id='githubbuddy_text2link'])), .js-comment-body>p:not(:has(>a[data-container-id='githubbuddy_text2link'])), p.commit-title:not(:has(>a)):not([data-container-id='githubbuddy_text2link'])");
         titleQuery.each(function(){
-            var current = $(this);
-            console.log(current);
+            var current = $(this);            
             var title = current.html();
             if (title !== undefined) {
                 $.each(inJson, function() {
@@ -81,7 +80,7 @@ function convertTextToLink(){
                     title = title.replace(
                             new RegExp(from),
                             '<a data-container-id="githubbuddy_text2link" href="'+ to +'" target="_blank">'+ displayAs +'</a>'
-                        );           
+                        );
                 });
                 current.html(title);
             }
