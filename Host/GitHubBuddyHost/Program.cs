@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -13,20 +15,31 @@ namespace GitHubBuddyHost
 {
     internal class Program
     {
+        private static string ErrorLogFile = "error.log";
+
         public static void Main(string[] args)
         {
             try
             {
-                JObject data;
+                Request data;
                 if ((data = Read()) != null)
                 {
-                    var minVer = new Version(data["min_required_nativeapp_ver"].Value<string>());
+                    var minVer = new Version(data.min_required_nativeapp_ver);
                     var assemblyVersion = Assembly.GetExecutingAssembly().GetName().Version;
                     if (assemblyVersion < minVer)
                     {
                         var err = $"Incompatible Native Host, minimal version required is {minVer}";
-                        Console.Error.WriteLine(err);
-                        Write("Error", err);
+                        WriteError(err);
+                        return;
+                    }
+                    if (string.IsNullOrWhiteSpace(data.token))
+                    {
+                        WriteError("GitHub token is required, please configure it in the options page of this extension");
+                        return;
+                    }
+                    if (string.IsNullOrWhiteSpace(data.difftool))
+                    {
+                        WriteError("Difftool path is required, please configure it in the options page of this extension");
                         return;
                     }
                     ProcessMessage(data);
@@ -34,17 +47,44 @@ namespace GitHubBuddyHost
             }
             catch (Exception ex)
             {
-                File.WriteAllText("error.log", ex.ToString());
-                Console.Error.WriteLine(ex.ToString());
+                WriteError(ex.ToString());
             }
         }
 
-        public static void ProcessMessage(JObject data)
+        private static void WriteError(string err)
         {
-            var file = data["file_path"].Value<string>();
-            var toolPath = data["difftool"].Value<string>();
-            var prUrl = data["pull_request"].Value<string>();
-            var token = data["token"].Value<string>();
+            CreateErrorLogFileIfNecessary();
+            File.AppendAllText(ErrorLogFile, err);
+            Console.Error.WriteLine(err);
+            Write("Error", err);
+        }
+
+        private static void CreateErrorLogFileIfNecessary()
+        {
+            if (!File.Exists(ErrorLogFile))
+            {
+                File.Create(ErrorLogFile);
+            }
+        }
+
+        [SuppressMessage("ReSharper", "InconsistentNaming")]
+        [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Local")]
+        // ReSharper disable once ClassNeverInstantiated.Local
+        private class Request
+        {
+            public string file_path { get; set; }
+            public string difftool { get; set; }
+            public string pull_request { get; set; }
+            public string token { get; set; }
+            public string min_required_nativeapp_ver { get; set; }
+        }
+
+        private static void ProcessMessage(Request req)
+        {
+            var file = req.file_path;
+            var toolPath = req.difftool;
+            var prUrl = req.pull_request;
+            var token = req.token;
             var questionMarkPos = prUrl.IndexOf("?", StringComparison.InvariantCulture);
             if (questionMarkPos > 0)
             {
@@ -78,22 +118,38 @@ namespace GitHubBuddyHost
             };
 
             var pr = client.PullRequest.Get(owner, repo, prNum).Result;
-            var compareResults = client.Repository.Commit.Compare(owner, repo, pr.Base.Sha, pr.Head.Sha).Result;
-            var githubFile = compareResults.Files.FirstOrDefault(x => x.Filename == file);
+            var headCommit = commit ?? pr.Head.Sha;
+            var parents = commit != null ? 
+                client.Repository.Commit.Get(owner, repo, commit).Result.Parents.Select(x => x.Sha)
+                : new List<string> { pr.Base.Sha };
             var pullRequestLocator = new PullRequestLocator()
             {
                 PullRequestNumber = prNum,
                 Owner = owner,
                 Repository = repo
             };
+            foreach (var baseCommit in parents)
+            {
+                var compareResults = client.Repository.Commit.Compare(owner, repo, baseCommit, headCommit).Result;
+                var githubFile = compareResults.Files.FirstOrDefault(x => x.Filename == file);
 
-            var fetcher = new DiffContentFetcher(pullRequestLocator, new FileContentPersist(), client, new PatchService());
-            var files = fetcher.FetchDiffContent(githubFile, pr.Head.Sha, pr.Base.Sha).Result;
-            Process.Start(toolPath, $"\"{files.Item1}\" \"{files.Item2}\"");
+                var fetcher = new DiffContentFetcher(pullRequestLocator, new FileContentPersist(), client,
+                    new PatchService());
+                var files = fetcher.FetchDiffContent(githubFile, headCommit, baseCommit).Result;
+                try
+                {
+                    Process.Start(toolPath, $"\"{files.Item1}\" \"{files.Item2}\"");
+                }
+                catch (Exception ex)
+                {
+                    WriteError($"Failed to launch the difftool\r\n\r\n${ex}");
+                    return;
+                }
+            }
             Write("Result", "OK");
         }
 
-        public static JObject Read()
+        private static Request Read()
         {
             var stdin = Console.OpenStandardInput();
 
@@ -116,10 +172,10 @@ namespace GitHubBuddyHost
                 }
             }
 
-            return JsonConvert.DeserializeObject<JObject>(new string(buffer));
+            return JsonConvert.DeserializeObject<Request>(new string(buffer));
         }
 
-        public static void Write(JToken messageType, JToken data)
+        private static void Write(JToken messageType, JToken data)
         {
             var json = new JObject {["data"] = data, ["msgType"] = messageType};
 

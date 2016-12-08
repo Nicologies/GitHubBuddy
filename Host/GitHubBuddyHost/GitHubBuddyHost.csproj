@@ -40,9 +40,6 @@
       <HintPath>packages\Octokit.0.21.1\lib\net45\Octokit.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="PReviewer.Core">
-      <HintPath>..\..\PReviewerNative\PReviewer.Core\bin\$(Configuration)\PReviewer.Core.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Windows.Forms" />
@@ -70,6 +67,12 @@
       <Link>PatchBin\patch.exe</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\PReviewerNative\PReviewer.Core\PReviewer.Core.csproj">
+      <Project>{02c5d035-15ee-4d3b-8dee-ddce4cfcf492}</Project>
+      <Name>PReviewer.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
