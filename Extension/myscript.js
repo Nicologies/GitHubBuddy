@@ -3,10 +3,12 @@ function onDiffToolButtonClicked(){
     var prUrl = window.location.href;
     chrome.storage.local.get({
         githubtoken: '',
-        difftoolpath: ''
+        difftoolpath: '',
+        difftoolargs: ''
         }, function(items) {
             var gitHubToken = items.githubtoken;
             var toolPath = items.difftoolpath;
+            var args = items.difftoolargs;            
             
             chrome.runtime.sendMessage({
                     min_required_nativeapp_ver: '1.0.0.0',
@@ -14,7 +16,8 @@ function onDiffToolButtonClicked(){
                     token: gitHubToken,
                     file_path: filePath,
                     pull_request: prUrl,
-                    difftool: toolPath
+                    difftool: toolPath,
+                    arguments: args
                 }, 
                 function(response){
                     if(response["msgType"] === "Error"){                        

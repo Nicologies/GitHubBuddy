@@ -77,6 +77,7 @@ namespace GitHubBuddyHost
             public string pull_request { get; set; }
             public string token { get; set; }
             public string min_required_nativeapp_ver { get; set; }
+            public string arguments { get; set; }
         }
 
         private static void ProcessMessage(Request req)
@@ -138,7 +139,12 @@ namespace GitHubBuddyHost
                 var files = fetcher.FetchDiffContent(githubFile, headCommit, baseCommit).Result;
                 try
                 {
-                    Process.Start(toolPath, $"\"{files.Item1}\" \"{files.Item2}\"");
+                    var arguments = $"\"{files.Item1}\" \"{files.Item2}\"";
+                    if (!string.IsNullOrWhiteSpace(req.arguments))
+                    {
+                        arguments = req.arguments.Replace("$BASE", files.Item1).Replace("$HEAD", files.Item2);
+                    }
+                    Process.Start(toolPath, arguments);
                 }
                 catch (Exception ex)
                 {
