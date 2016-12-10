@@ -1,7 +1,7 @@
 {
     "manifest_version":2,
     "name": "GitHubBuddy",
-    "description" : "Extension to not only help review GitHub pull request using your preferred native difftool but also lots of other improvements to GitHub",
+    "description" : "Extension to not only help review GitHub pull request using your preferred native difftool but also lots of other improvements",
     "version" : "1.0.0.3",
     "icons": {
         "128": "icon128128.png"
