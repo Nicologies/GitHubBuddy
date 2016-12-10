@@ -1,8 +1,11 @@
 {
     "manifest_version":2,
     "name": "GitHubBuddy",
-    "description" : "Extension to help review GitHub pull request",
-    "version" : "1.0.0.2",
+    "description" : "Extension to not only help review GitHub pull request using your preferred native difftool but also lots of other improvements to GitHub",
+    "version" : "1.0.0.3",
+    "icons": {
+        "128": "icon128128.png"
+    },
     "permissions" : [
         "activeTab",
         "nativeMessaging",
@@ -22,6 +25,11 @@
     "options_ui": {
         "page": "options.html",
         "chrome_style": true
+    },
+    "browser_action": {
+        "default_icon": "icon128128.png",
+        "default_title": "GitHubBuddy",
+        "default_popup": "options.html"
     },
     "applications": {
         "gecko": {
