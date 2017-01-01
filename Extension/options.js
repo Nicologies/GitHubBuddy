@@ -3,6 +3,14 @@ function save_options() {
   var token = document.getElementById('githubtoken').value;
   var path = document.getElementById('difftoolpath').value;
   var dontMerge = document.getElementById('dontMergeLabel').value;
+  var status = document.getElementById('status');
+  if(!dontMerge.match(/^[-\w\s]+$/)){    
+    status.textContent = 'Only alphanumeric, space, and dash allowed';
+    setTimeout(function() {
+      status.textContent = '';
+    }, 2000);
+    return;
+  }
   var text2linkValue = document.getElementById('text2link').value;
   var difftoolargsValue = document.getElementById('difftoolargs').value;
   chrome.storage.local.set({
@@ -12,8 +20,7 @@ function save_options() {
     text2link: text2linkValue,
     difftoolargs: difftoolargsValue
   }, function() {
-    // Update status to let user know options were saved.
-    var status = document.getElementById('status');
+    // Update status to let user know options were saved.    
     status.textContent = 'Options saved.';
     setTimeout(function() {
       status.textContent = '';
