@@ -43,7 +43,7 @@ function appendDiffToolButton(){
 }
 
 function disableMergeButtonIfMarkedAsDontMerge(){
-    if(window.location.href.toLowerCase().indexOf("pull") === -1){
+    if(location.pathname.split('/')[3] !== 'pull'){
         return;
     }
     
