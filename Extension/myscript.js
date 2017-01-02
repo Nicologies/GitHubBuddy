@@ -60,6 +60,8 @@ function disableMergeButtonIfMarkedAsDontMerge(){
     });
 }
 
+function escapeHTML(str) { return str.replace(/[&"'<>]/g, (m) => ({ "&": "&amp;", '"': "&quot;", "'": "&#39;", "<": "&lt;", ">": "&gt;" })[m]); }
+
 function convertTextToLink(){
     chrome.storage.local.get({text2link: ''}, function(items){
         if(items.text2link === ''){
@@ -84,7 +86,7 @@ function convertTextToLink(){
                     var displayAs = this.displayAs;
                     title = title.replace(
                             new RegExp(from),
-                            '<a data-container-id="githubbuddy_text2link" href="'+ to +'" target="_blank">'+ displayAs +'</a>'
+                            '<a data-container-id="githubbuddy_text2link" href="'+ escapeHTML(to) +'" target="_blank">'+ escapeHTML(displayAs) +'</a>'
                         );
                 });
                 current.html(title);
