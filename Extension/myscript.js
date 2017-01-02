@@ -34,7 +34,6 @@ function onDiffToolButtonClicked(){
 
 function appendDiffToolButton(){
     // location.pathname looks like /owner/repo/pull/id    
-    console.log(location.pathname)
     if (location.pathname.split('/')[3] !== 'pull') {
         return;
     }
