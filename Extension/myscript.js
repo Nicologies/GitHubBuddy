@@ -33,7 +33,7 @@ function onDiffToolButtonClicked(){
 }
 
 function appendDiffToolButton(){
-    // location.pathname looks like /owner/repo/pull/id
+    // location.pathname looks like /owner/repo/pull/id    
     console.log(location.pathname)
     if (location.pathname.split('/')[3] !== 'pull') {
         return;
@@ -74,9 +74,9 @@ function convertTextToLink(){
         }catch(e){
             console.log(e);
             return;
-        }
+        }        
         var titleQuery = $("h1 > span.js-issue-title:not(:has(>a[data-container-id='githubbuddy_text2link'])), .js-comment-body>p:not(:has(>a[data-container-id='githubbuddy_text2link'])), p.commit-title:not(:has(>a)):not([data-container-id='githubbuddy_text2link'])");
-        titleQuery.each(function(){
+        titleQuery.each(function(){            
             var current = $(this);            
             var title = current.html();
             if (title !== undefined) {
@@ -85,7 +85,7 @@ function convertTextToLink(){
                     var to = this.to;
                     var displayAs = this.displayAs;
                     title = title.replace(
-                            new RegExp(from),
+                            new RegExp(from, 'igm'),
                             '<a data-container-id="githubbuddy_text2link" href="'+ escapeHTML(to) +'" target="_blank">'+ escapeHTML(displayAs) +'</a>'
                         );
                 });
@@ -96,8 +96,8 @@ function convertTextToLink(){
 }
 
 function performActions(){
-    appendDiffToolButton();
-    disableMergeButtonIfMarkedAsDontMerge();
+    appendDiffToolButton();    
+    disableMergeButtonIfMarkedAsDontMerge();    
     convertTextToLink();
 }
 
