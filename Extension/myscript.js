@@ -72,8 +72,10 @@ function disableMergeButtonIfMarkedAsDontMerge(){
         var queryForDontMergeLabel = "#partial-discussion-sidebar .sidebar-labels a.label[title='" + items.dontMergeLabel + "']";
         if($(queryForDontMergeLabel).length){
             var buttons = $('#partial-pull-merging .merge-message .js-select-menu button');
-            $('#partial-pull-merging .merge-message .js-select-menu button').disable(true)
-                .closest(".merge-message").append("<p class='alt-merge-options text-small'>Merge is disabled as this pull request has a label of "+items.dontMergeLabel+"</p>");
+            $('#partial-pull-merging .merge-message .js-select-menu button:not([disabled])')
+                .disable(true)
+                .closest(".merge-message")
+                .append("<br/><p class='alt-merge-options text-small'>Merge is disabled as this pull request has a label of "+items.dontMergeLabel+"</p>");
         }
     });
 }
