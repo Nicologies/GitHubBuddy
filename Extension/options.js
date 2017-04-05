@@ -3,8 +3,9 @@ function save_options() {
   var token = document.getElementById('githubtoken').value;
   var path = document.getElementById('difftoolpath').value;
   var dontMerge = document.getElementById('dontMergeLabel').value;
+  
   var status = document.getElementById('status');
-  if(!dontMerge.match(/^[-\w\s]+$/)){    
+  if(dontMerge && !dontMerge.match(/^[-\w\s]+$/)){    
     status.textContent = 'Only alphanumeric, space, and dash allowed';
     setTimeout(function() {
       status.textContent = '';
@@ -34,7 +35,7 @@ function restore_options() {
   chrome.storage.local.get({
     githubtoken: '',
     difftoolpath: '',
-    dontMergeLabel: 'Do Not Merge',
+    dontMergeLabel: '',
     text2link: '',
     difftoolargs: ''
   }, function(items) {
