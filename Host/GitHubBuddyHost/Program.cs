@@ -10,6 +10,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Octokit;
 using PReviewer.Core;
+using System.Threading;
 
 namespace GitHubBuddyHost
 {
@@ -144,15 +145,18 @@ namespace GitHubBuddyHost
                     {
                         arguments = req.arguments.Replace("$BASE", files.Item1).Replace("$HEAD", files.Item2);
                     }
-                    Process.Start(toolPath, arguments);
+                    using (var proc = Process.Start(toolPath, arguments))
+                    {
+                        proc.WaitForExit();
+                        Write("Result", "OK");
+                    }
                 }
                 catch (Exception ex)
                 {
-                    WriteError($"Failed to launch the difftool\r\n\r\n${ex}");
+                    WriteError($"Failed to launch the difftool\r\n\r\n{ex}");
                     return;
                 }
             }
-            Write("Result", "OK");
         }
 
         private static Request Read()
