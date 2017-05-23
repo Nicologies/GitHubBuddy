@@ -9,7 +9,7 @@ GitHubBuddy is your friend to help
 
 ## How to Install and Configure
 
-Currently, it only supports FireFox and Chrome on a Windows system. You can follow the below steps to install it:
+Currently, it only supports FireFox and Chrome. You can follow the below steps to install it:
 
 ### Install
 
