@@ -140,6 +140,14 @@ function onScrollBarChanged(){
 }
 
 $(function(){
+    chrome.storage.local.get({
+        enableWideGitHub: true
+      }, function(items){
+        var enableWideGitHub = items.enableWideGitHub;
+        if(enableWideGitHub) {
+            loadCSS("wide-github");
+        }
+    });
     jQuery.fn.extend({
         disable: function(state) {
             return this.each(function() {
@@ -152,5 +160,14 @@ $(function(){
     });
     performActions();
     
-    $(window).on('scroll', onScrollBarChanged);
+    $(window).on('scroll', onScrollBarChanged);    
 });
+
+function loadCSS(file) {
+  var link = document.createElement("link");
+  link.href = chrome.extension.getURL(file + '.css');
+  link.id = file;
+  link.type = "text/css";
+  link.rel = "stylesheet";
+  document.getElementsByTagName("head")[0].appendChild(link);
+}

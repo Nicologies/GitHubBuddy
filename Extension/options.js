@@ -3,6 +3,7 @@ function save_options() {
   var token = document.getElementById('githubtoken').value;
   var path = document.getElementById('difftoolpath').value;
   var dontMerge = document.getElementById('dontMergeLabel').value;
+  var enableWideGitHub = document.getElementById('enableWideGitHub').checked;
   
   var status = document.getElementById('status');
   if(dontMerge && !dontMerge.match(/^[-\w\s]+$/)){    
@@ -19,7 +20,8 @@ function save_options() {
     difftoolpath: path,
     dontMergeLabel: dontMerge,
     text2link: text2linkValue,
-    difftoolargs: difftoolargsValue
+    difftoolargs: difftoolargsValue,
+    enableWideGitHub: enableWideGitHub
   }, function() {
     // Update status to let user know options were saved.    
     status.textContent = 'Options saved.';
@@ -37,13 +39,16 @@ function restore_options() {
     difftoolpath: '',
     dontMergeLabel: '',
     text2link: '',
-    difftoolargs: ''
+    difftoolargs: '',
+    enableWideGitHub: true
   }, function(items) {
     document.getElementById('difftoolpath').value = items.difftoolpath;
     document.getElementById('githubtoken').value = items.githubtoken;
     document.getElementById('dontMergeLabel').value = items.dontMergeLabel;
     document.getElementById('text2link').value = items.text2link;
     document.getElementById('difftoolargs').value = items.difftoolargs;
+    document.getElementById('enableWideGitHub').checked = items.enableWideGitHub;
+    
   });
 }
 document.addEventListener('DOMContentLoaded', restore_options);
