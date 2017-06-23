@@ -106,6 +106,9 @@ function convertTextToLink(){
             if(isElementInViewport(current)){
                 var oldText = current.html();
                 var newText = oldText;
+                if(oldText.startsWith("<a ")) {
+                    return;
+                }
                 if (newText !== undefined) {
                     $.each(inJson, function() {
                         var from = this.from;
