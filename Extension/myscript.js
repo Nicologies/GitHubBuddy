@@ -8,10 +8,10 @@ function onDiffToolButtonClicked(){
         }, function(items) {
             var gitHubToken = items.githubtoken;
             var toolPath = items.difftoolpath;
-            var args = items.difftoolargs;            
+            var args = items.difftoolargs;
             
             chrome.runtime.sendMessage({
-                    min_required_nativeapp_ver: '1.0.0.0',
+                    min_required_nativeapp_ver: '1.0.0.2',
                     msgType: 'open_difftool',
                     token: gitHubToken,
                     file_path: filePath,
@@ -20,11 +20,11 @@ function onDiffToolButtonClicked(){
                     arguments: args
                 }, 
                 function(response){
-                    if(response["msgType"] === "Error"){                        
+                    if(response["msgType"] === "Error"){
                         console.log(response);
                         if(response["data"].includes("minimal version required")){
                             var downloadUrl = "https://github.com/Nicologies/GitHubBuddyHost/releases/latest";
-                            alert(response["data"]+ "\n" + "Please download the latest version from " + downloadUrl);
+                            alert(response["data"]+ "\n" + "Please install the latest version from " + downloadUrl);
                             window.open(downloadUrl, '_blank').focus();
                         }
                     }

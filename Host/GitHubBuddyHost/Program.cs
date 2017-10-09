@@ -120,7 +120,8 @@ namespace GitHubBuddyHost
             };
 
             var pr = client.PullRequest.Get(owner, repo, prNum).Result;
-            var headCommit = commit ?? pr.Head.Sha;
+            var mergeCommit = client.Repository.Commit.Get(owner, repo, $"refs/pull/{prNum}/merge").Result;
+            var headCommit = commit ?? mergeCommit?.Sha ??pr.Head.Sha;
             var parents = commit != null ? 
                 client.Repository.Commit.Get(owner, repo, commit).Result.Parents.Select(x => x.Sha)
                 : new List<string> { pr.Base.Sha };
