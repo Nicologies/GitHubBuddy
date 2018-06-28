@@ -69,9 +69,8 @@ function disableMergeButtonIfMarkedAsDontMerge(){
         if(items.dontMergeLabel === ''){
             return;
         }
-        var queryForDontMergeLabel = "#partial-discussion-sidebar .sidebar-labels a.label[title='" + items.dontMergeLabel + "']";
+        var queryForDontMergeLabel = "#partial-discussion-sidebar .sidebar-labels a[title='" + items.dontMergeLabel + "']";
         if($(queryForDontMergeLabel).length){
-            var buttons = $('#partial-pull-merging .merge-message .js-select-menu button');
             $('#partial-pull-merging .merge-message .js-select-menu button:not([disabled])')
                 .disable(true)
                 .closest(".merge-message")
