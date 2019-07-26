@@ -1,4 +1,0 @@
-[submodule "PReviewerNative"]
-	path = PReviewerNative
-	url = git@github.com:EbenZhang/PReviewer.git
-	branch = master

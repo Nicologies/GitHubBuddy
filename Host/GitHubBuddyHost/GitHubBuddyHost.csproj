@@ -48,14 +48,14 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\..\PReviewerNative\PReviewer\PatchBin\patch.exe.manifest">
+    <Content Include="..\..\PReviewerNative\PReviewer.Core\PatchBin\patch.exe.manifest">
       <Link>PatchBin\patch.exe.manifest</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\..\PReviewerNative\PReviewer\PatchBin\patch.exe">
+    <Content Include="..\..\PReviewerNative\PReviewer.Core\PatchBin\patch.exe">
       <Link>PatchBin\patch.exe</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

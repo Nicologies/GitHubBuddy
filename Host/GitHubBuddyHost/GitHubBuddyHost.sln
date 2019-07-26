@@ -1,13 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26730.16
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29102.190
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GitHubBuddyHost", "GitHubBuddyHost.csproj", "{CA3FA77F-107E-4C2E-A841-A33C5D29564F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PReviewer.Core", "..\..\PReviewerNative\PReviewer.Core\PReviewer.Core.csproj", "{02C5D035-15EE-4D3B-8DEE-DDCE4CFCF492}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExtendedCL", "..\..\PReviewerNative\ExtendedCL\ExtendedCL\ExtendedCL.csproj", "{E4142C9C-2AFD-4579-97E2-767F3196AC4E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +21,6 @@ Global
 		{02C5D035-15EE-4D3B-8DEE-DDCE4CFCF492}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{02C5D035-15EE-4D3B-8DEE-DDCE4CFCF492}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{02C5D035-15EE-4D3B-8DEE-DDCE4CFCF492}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E4142C9C-2AFD-4579-97E2-767F3196AC4E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E4142C9C-2AFD-4579-97E2-767F3196AC4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E4142C9C-2AFD-4579-97E2-767F3196AC4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E4142C9C-2AFD-4579-97E2-767F3196AC4E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
