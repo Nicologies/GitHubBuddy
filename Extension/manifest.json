@@ -1,27 +1,27 @@
 {
-    "manifest_version":2,
+    "manifest_version": 2,
     "name": "GitHubBuddy",
     "author": "Nicologies",
-    "description" : "Extension to not only help review GitHub pull request using your preferred native difftool but also lots of other improvements",
-    "version" : "1.0.0.17",
+    "description": "Extension help review pull request using your preferred native difftool and lots of other improvements",
+    "version": "1.0.0.19",
     "icons": {
         "128": "icon128128.png"
     },
-    "permissions" : [
-        "activeTab",
+    "permissions": [
         "nativeMessaging",
         "storage"
     ],
     "background": {
-        "scripts":["connection.js"],
+        "scripts": ["connection.js"],
         "persistent": false
     },
-    "content_scripts":[
-        {
-            "matches": ["*://github.com/*"],
-            "js" : ["jquery-3.1.0.min.js", "myscript.js"]
-        }
-    ],
+    "content_scripts": [{
+        "matches": ["*://github.com/*"],
+        "js": ["jquery-3.6.1.min.js", "myscript.js", "text2link.js"]
+    }, {
+        "matches": ["*://dev.azure.com/*"],
+        "js": ["jquery-3.6.1.min.js", "text2link.js"]
+    }],
     "options_ui": {
         "page": "options.html",
         "chrome_style": true,
