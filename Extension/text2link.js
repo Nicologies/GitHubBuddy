@@ -3,11 +3,11 @@ class TextToLink {
 
     convertForAzureDevOps(config) {
 
-        let rightPanel = $("div.repos-pr-details-page-tabbar");
-        if (!rightPanel) {
+        const rightPanel = $("div.repos-pr-details-page-tabbar");
+        if (rightPanel.length === 0) {
             return;
         }
-        let titleQuery = $("div.repos-pr-title > input");
+        const titleQuery = $("div.repos-pr-title > input");
         if (titleQuery.length === 0) {
             return;
         }
@@ -16,16 +16,16 @@ class TextToLink {
         const linksListId = "githubbuddy_text2linklist";
         let linksPanel = rightPanel.find(`#${linksPanelId}`);
 
-        let oldText = titleQuery[0].value;
-        $.each(config, function (index) {
-            var from = this.from;
+        const prTitle = titleQuery[0].value;
+        $.each(config, (index, rule) => {
+            const from = rule.from;
             const regexp = new RegExp(`.*${from}.*`, 'igm');
-            const match = oldText.match(regexp);
+            const match = prTitle.match(regexp);
             if (!match) {
                 return;
             }
-            const to = escapeHTML(oldText.replace(regexp, this.to));
-            const displayAs = escapeHTML(oldText.replace(regexp, this.displayAs));
+            const to = this.escapeHTML(prTitle.replace(regexp, rule.to));
+            const displayAs = this.escapeHTML(prTitle.replace(regexp, rule.displayAs));
 
             if (linksPanel.length === 0) {
                 rightPanel.append('<div class="flex-column" id= "' + linksPanelId + '"><div id="' + linksListId + '"></div></div>');
@@ -43,21 +43,21 @@ class TextToLink {
     }
 
     convertTextToLink() {
-        chrome.storage.local.get({ text2link: '' }, function (items) {
+        chrome.storage.local.get({ text2link: '' }, (items) => {
             if (items.text2link === '') {
                 return;
             }
 
             var inJson;
             try {
-                inJson = $.parseJSON(items.text2link);
+                inJson = JSON.parse(items.text2link);
             } catch (e) {
                 console.log(e);
                 return;
             }
 
             if (window.location.host === 'dev.azure.com') {
-                convertForAzureDevOps(inJson);
+                this.convertForAzureDevOps(inJson);
                 return;
             }
 
@@ -66,27 +66,26 @@ class TextToLink {
             let commentsQuery = $(".js-comment-body>p:not(:has(>a[data-container-id='githubbuddy_text2link']))");
             let commitTitleQuery = $("p.commit-title:not(:has(>a)):not([data-container-id='githubbuddy_text2link'])");
             let quereis = titleQuery.add(commentsQuery).add(commitTitleQuery);
-            quereis.each(function () {
-                var current = $(this);
+            quereis.each((_index, current) => {
                 if (isElementInViewport(current)) {
-                    var oldText = current.html();
-                    var newText = oldText;
+                    const oldText = $(current).html();
+                    let newText = oldText;
                     if (oldText.startsWith("<a ")) {
                         return;
                     }
                     if (newText !== undefined) {
-                        $.each(inJson, function () {
-                            var from = this.from;
-                            var to = this.to;
-                            var displayAs = this.displayAs;
+                        $.each(inJson, (_, rule) => {
+                            const from = rule.from;
+                            const to = rule.to;
+                            const displayAs = rule.displayAs;
                             newText = newText.replace(
                                 new RegExp(from, 'igm'),
-                                '<a data-container-id="githubbuddy_text2link" href="' + escapeHTML(to) + '" target="_blank">' + escapeHTML(displayAs) + '</a>'
+                                '<a data-container-id="githubbuddy_text2link" href="' + this.escapeHTML(to) + '" target="_blank">' + this.escapeHTML(displayAs) + '</a>'
                             );
                         });
 
                         if (newText !== oldText) {
-                            current.html(newText);
+                            $(current).html(newText);
                         }
                     }
                 }
